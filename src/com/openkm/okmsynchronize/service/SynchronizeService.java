@@ -117,7 +117,9 @@ public class SynchronizeService {
             
             // Initialize actionResult
             initializeResultAction();
-
+            if(ws.exists("/okm:root/contrato.pdf", "document") ) {
+            	System.out.println("El archivo si existe");
+            }
             // Get start date action
             Date startDate = new Date();
             
