@@ -142,8 +142,8 @@ public class ConfigurationView extends javax.swing.JDialog {
     }
     
     private String formatUrlHost(String url) {
-        if(!url.startsWith("http://")) {
-            return "http://"  + url;
+        if(!url.startsWith("http://") || !url.startsWith("https://")) {
+            return "https://"  + url;
         } else {
             return url;
         }
