@@ -41,4 +41,6 @@ public interface OpenKMWS {
 	public void renameDocument(String node, String newName) throws SynchronizeException;
 
 	public String getRootNode(String context) throws SynchronizeException;
+	
+	public Document createDocumentSimple(String node,InputStream is) throws SynchronizeException;
 }
