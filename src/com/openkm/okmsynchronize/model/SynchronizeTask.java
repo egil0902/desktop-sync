@@ -80,8 +80,9 @@ public class SynchronizeTask extends TimerTask {
             }
             
             // Sincronitzam els documents
+            service.uploadDocuments("D:\\sinc");
             repository.refreshSynchronizedDocuments();
-            service. synchronizeDocuments(repository.getSyncronizedDocuments());
+            service.synchronizeDocuments(repository.getSyncronizedDocuments());
                                 
             // Eliminam els objectes del repositori que ja no existeixen
             repository.purgeRemovedSynchronizedObejcts();            
