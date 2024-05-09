@@ -25,7 +25,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
@@ -111,15 +113,14 @@ public class SynchronizeService {
     }    
     
     public void synchronizeDocuments(List<SynchronizedObject> listDocuments) {
-        log.debug(KEY_BUNDLE + "method:synchronizeDocuments [listDocuments]");
+            	
+    	log.debug(KEY_BUNDLE + "method:synchronizeDocuments [listDocuments]");
 
         try {
             
             // Initialize actionResult
             initializeResultAction();
-            if(ws.exists("/okm:root/contrato.pdf", "document") ) {
-            	System.out.println("El archivo si existe");
-            }
+
             // Get start date action
             Date startDate = new Date();
             
@@ -893,6 +894,32 @@ public class SynchronizeService {
             }
             return o1.compareTo(o2);
         }        
-    }    
+    }
+
+	public void uploadDocuments(String folder) {
+		log.debug(KEY_BUNDLE + "Uploading Documents on working path");
+        File fileList=new File(folder);
+        for (final File fileEntry : fileList.listFiles()) {
+            if (!fileEntry.isDirectory()) {
+            	try {
+            	InputStream is = new FileInputStream(fileEntry.getAbsolutePath());
+            	
+					Document doc = ws.createDocumentSimple(fileEntry.getName(),is);
+					if(doc!=null) {
+						fileEntry.renameTo(new File(folder+"\\OpenKMSynchronized\\documents\\"+fileEntry.getName()));
+						fileEntry.delete();
+					}
+				} catch (SynchronizeException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+            }
+        }
+
+		
+	}    
     
 }
