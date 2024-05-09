@@ -464,4 +464,10 @@ public class OpenKMWS_sdk1_0 implements OpenKMWS {
         }
         return buf;
     }
+
+	@Override
+	public Document createDocumentSimple(String node, InputStream is) throws SynchronizeException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

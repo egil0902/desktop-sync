@@ -28,12 +28,15 @@ import com.openkm.sdk4j.exception.VirusDetectedException;
 import com.openkm.sdk4j.exception.WebserviceException;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import org.apache.commons.io.IOUtils;
 
 /**
  *
@@ -127,6 +130,19 @@ public class OpenKMWS_sdk2_0 implements OpenKMWS {
             throw new SynchronizeException(ex);
         }
     }
+    @Override
+    public Document createDocumentSimple(String node,InputStream is)  throws SynchronizeException {
+    	Document doc=null;
+    	try {
+            
+            doc = ws.createDocumentSimple("/okm:root/"+node, is);
+            IOUtils.closeQuietly(is);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    	return doc;
+    }
+    
 
     @Override
     public void deleteFolder(String node) throws SynchronizeException {
