@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.openkm.okmsynchronize.model;
 
 import com.openkm.okmsynchronize.utils.SynchronizeException;
@@ -9,10 +5,6 @@ import com.openkm.okmsynchronize.utils.SynchronizeLog;
 import com.openkm.okmsynchronize.ws.OpenKMWSFactory;
 import java.util.Timer;
 
-/**
- *
- * @author abujosa
- */
 public class SynchronizeTimer {
     
     private final static String KEY_BUNDLE = SynchronizeTimer.class.getName();
@@ -25,9 +17,9 @@ public class SynchronizeTimer {
     private AlertManagerModel alertManager;
     private SynchronizeTask task;
     private Timer timer;
-    
+    private ConfigurationModel configuration; // Agregar referencia a ConfigurationModel
 
-    public SynchronizeTimer(int pollingInterval, SynchronizedRepository repository, ServerCredentials credentials, AlertManagerModel alertManager, SynchronizeLog log) {
+    public SynchronizeTimer(int pollingInterval, SynchronizedRepository repository, ServerCredentials credentials, AlertManagerModel alertManager, SynchronizeLog log, ConfigurationModel configuration) {
         this.timer = new Timer(Boolean.TRUE);
         this.pollingInterval = pollingInterval;
         this.repository = repository;
@@ -35,6 +27,7 @@ public class SynchronizeTimer {
         this.running = Boolean.FALSE;
         this.alertManager = alertManager;
         this.log = log;
+        this.configuration = configuration; // Inicializar ConfigurationModel
     }
 
     public void initialize(Integer delay) {
@@ -42,7 +35,8 @@ public class SynchronizeTimer {
         try {
             if(credentials.isValid() && OpenKMWSFactory.instance(credentials).isConnectionSuccessful()) {      
                 timer = new Timer(Boolean.TRUE);
-                task = new SynchronizeTask(repository, credentials, log, alertManager);
+                // Pasar el objeto ConfigurationModel al constructor de SynchronizeTask
+                task = new SynchronizeTask(repository, credentials, log, alertManager, configuration);
                 timer.schedule(task, delay != null ? delay : 0, pollingInterval * 1000);
                 running = Boolean.TRUE;
                 log.info(KEY_BUNDLE + " Synchronize service running.");                
