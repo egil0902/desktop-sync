@@ -224,7 +224,8 @@ public class SynchronizeDesktopModel {
         rw.setRepository(repository);
         
         // Get Timer synchronize task
-        timer = new SynchronizeTimer(Integer.parseInt(configuration.getKeyValue(ConfigurationModel.KEY_SYNCHRONIZE_INTERVAL)), repository, credentials, alertManager, log);          
+        timer = new SynchronizeTimer(Integer.parseInt(configuration.getKeyValue(ConfigurationModel.KEY_SYNCHRONIZE_INTERVAL)), repository, credentials, alertManager, log, configuration);
+          
         timer.initialize((10*1000));        
         
         // Start monitor watcher
