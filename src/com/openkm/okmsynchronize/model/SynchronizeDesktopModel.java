@@ -15,6 +15,8 @@ import com.openkm.okmsynchronize.ws.OpenKMWSFactory;
 import com.openkm.okmsynchronize.ws.OpenKMWSVersions;
 import com.openkm.sdk4j.bean.Document;
 import com.openkm.sdk4j.bean.Folder;
+import com.openkm.sdk4j.exception.ItemExistsException;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -186,6 +188,8 @@ public class SynchronizeDesktopModel {
         // Set the working user directory
         setWorkingDirectory(configuration.getKeyValue(ConfigurationModel.KEY_WORK_DIRECTORY));
         
+        // Set the remote path at  OpenKM server
+        checkAndCreateRemotePath();
         // Create log
         boolean debug = "DEBUG".equals(configuration.getKeyValue(ConfigurationModel.KEY_DEBUG_LEVEL));
         log = new SynchronizeLog(getWorkingDirectory(), debug);
@@ -223,6 +227,7 @@ public class SynchronizeDesktopModel {
         
         rw.setRepository(repository);
         
+        
         // Get Timer synchronize task
         timer = new SynchronizeTimer(Integer.parseInt(configuration.getKeyValue(ConfigurationModel.KEY_SYNCHRONIZE_INTERVAL)), repository, credentials, alertManager, log, configuration);
           
@@ -237,6 +242,10 @@ public class SynchronizeDesktopModel {
         
         // Set server default context
         serverContext = ContextOpenKMServer.TAXONOMY;
+        //String baseDirectory = serverContext.name();
+        // Set the remote path at  OpenKM server
+        checkAndCreateRemotePath();
+       
         
         // Change state to Running
         changeState(SystemStates.RUNNING);        
@@ -278,4 +287,52 @@ public class SynchronizeDesktopModel {
     public static boolean haveNewError() { return newError; }
     public static void setNewError(boolean nerror) { newError = nerror; }
     
+    public void checkAndCreateRemotePath() {
+        try {
+            if (credentials == null) {
+                //log.info(KEY_BUNDLE, "Server credentials are null.");
+                return;
+            }
+            
+            String remotePathConfig = configuration.getKeyValue(ConfigurationModel.KEY_REMOTE_DIRECTORY);
+            
+            if (!Utils.isEmpty(remotePathConfig)) {
+                
+                String normalizedRemotePath = remotePathConfig.startsWith("/") ? remotePathConfig : "/" + remotePathConfig;
+          
+                String[] pathComponents = normalizedRemotePath.split("/");
+                
+                String baseServerPath = "/okm:root";
+                
+                for (String component : pathComponents) {
+                   
+                    if (Utils.isEmpty(component)) {
+                        continue;
+                    }
+                    
+                    String fullPath = baseServerPath + "/" + component;
+                    
+                    OpenKMWS ws = OpenKMWSFactory.instance(credentials);
+                    
+                    if (!ws.exists(serverContext.getNodeName(), fullPath)) {
+                        // Si el directorio no existe, intentar crearlo
+                        try {
+                            ws.createFolder(fullPath);
+                            log.info("Created directory on server: " + fullPath);
+                        } catch (Exception e) {
+                            log.info("Directory already exists on server: " + fullPath);
+                        }
+                    } else {
+                        log.info("Directory already exists on server: " + fullPath);
+                    }
+                  
+                    baseServerPath = fullPath;
+                }
+            }
+        } catch (SynchronizeException ex) {
+            log.error(KEY_BUNDLE, ex);
+        }
+    }
+    
+
 }
