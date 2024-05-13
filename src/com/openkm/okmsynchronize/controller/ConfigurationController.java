@@ -75,6 +75,7 @@ public class ConfigurationController {
             String error = validateView(view.getSynchronizeIntervalValue(), view.getWorkingDirectoriValue());
             if(Utils.isEmpty(error)) {                        
                 model.setKeyValue(ConfigurationModel.KEY_WORK_DIRECTORY, view.getWorkingDirectoriValue());
+                model.setKeyValue(ConfigurationModel.KEY_REMOTE_DIRECTORY, view.getRemotePathValue());
                 model.setKeyValue(ConfigurationModel.KEY_HOST, view.getHostValue());
                 model.setKeyValue(ConfigurationModel.KEY_USER, view.getUserValue());
                 model.setKeyValue(ConfigurationModel.KEY_PASSWORD, view.getPasswordValue());
