@@ -78,7 +78,9 @@ public class SynchronizeTask extends TimerTask {
 
             // Sincronitzam els documents
             // Utilizar la ruta de trabajo obtenida del ConfigurationModel
-            service.uploadDocuments(workDirectory);
+            
+            String remotePath =  configuration.getKeyValue(ConfigurationModel.KEY_REMOTE_DIRECTORY);
+            service.uploadDocuments(workDirectory, remotePath);
             repository.refreshSynchronizedDocuments();
             service.synchronizeDocuments(repository.getSyncronizedDocuments());
 
