@@ -20,6 +20,7 @@ public class ConfigurationModel {
     private static final String KEY_BUNDLE = ConfigurationModel.class.getName();
     
     public final static String KEY_WORK_DIRECTORY       = "com.openkm.odesktop.work_directory";
+    public final static String KEY_REMOTE_DIRECTORY     = "com.openkm.odesktop.remote_directory";
     public final static String KEY_SDK_VERSION          = "com.openkm.odesktop.sdk_version";
     public final static String KEY_HOST                 = "com.openkm.odesktop.host";
     public final static String KEY_USER                 = "com.openkm.odesktop.user";
@@ -42,12 +43,13 @@ public class ConfigurationModel {
     public static final Map<String, String> DEFAULT_MAP_CONFIGURATION = new HashMap<String, String>() {
         {
             put(KEY_HOST, "");
+            put(KEY_WORK_DIRECTORY, "");
+            put(KEY_REMOTE_DIRECTORY, "");
             put(KEY_USER, "");
             put(KEY_PASSWORD, "");
             put(KEY_SDK_VERSION, OpenKMWSVersions.v1_0.getId());
             put(kEY_LOCALE, "EN");
             put(KEY_DEBUG_LEVEL, "INFO");
-            put(KEY_WORK_DIRECTORY, "");
             put(KEY_RESTRICT_EXTENSIONS, ".back,.~,.odesktop");
             put(KEY_INVALID_CHARACTERS, ":");
             put(KEY_SYNCHRONIZE_INTERVAL, "60");
@@ -59,6 +61,8 @@ public class ConfigurationModel {
             put(kEY_MONITOR_KEEPALIVETIME, "10"); 
         }
     };
+
+	//public static final String KEY_REMOTE_DIRECTORY = null;
     
     private Map<String, String> mapConfiguration;
     private Map<String, String> oldConfiguration;
@@ -127,6 +131,7 @@ public class ConfigurationModel {
         str.append("System configuration \n");
         str.append("================================================================\n");
         str.append("   WORKING_DIRECTORY: ").append(getKeyValue(KEY_WORK_DIRECTORY)).append("\n");
+        str.append("   REMOTE_DIRECTORY: ").append(getKeyValue(KEY_REMOTE_DIRECTORY)).append("\n");
         str.append("   SDK_VERSION: ").append(getKeyValue(KEY_SDK_VERSION)).append("\n");
         str.append("   HOST: ").append(getKeyValue(KEY_HOST)).append("\n");
         str.append("   USERNAME: ").append(getKeyValue(KEY_USER)).append("\n");
@@ -147,7 +152,7 @@ public class ConfigurationModel {
     }        
     
     public boolean isChanged() {
-        return isChangedKey(KEY_WORK_DIRECTORY) || isChangedKey(KEY_SDK_VERSION) || isChangedKey(KEY_HOST) ||
+        return isChangedKey(KEY_WORK_DIRECTORY) ||isChangedKey(KEY_REMOTE_DIRECTORY) || isChangedKey(KEY_SDK_VERSION) || isChangedKey(KEY_HOST) ||
                isChangedKey(KEY_USER) || isChangedKey(KEY_PASSWORD) || isChangedKey(KEY_RESTRICT_EXTENSIONS) ||
                isChangedKey(KEY_INVALID_CHARACTERS) || isChangedKey(KEY_SYNCHRONIZE_INTERVAL) || isChangedKey(KEY_NAVIGATOR) ||
                isChangedKey(kEY_EXPLORER);

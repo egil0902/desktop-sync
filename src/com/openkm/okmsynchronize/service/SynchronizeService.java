@@ -9,6 +9,7 @@ import com.openkm.okmsynchronize.model.AlertManagerModel;
 import com.openkm.okmsynchronize.model.ConflictType;
 import com.openkm.okmsynchronize.model.StateSynchronizeObject;
 import com.openkm.okmsynchronize.model.SynchronizeAlert;
+import com.openkm.okmsynchronize.model.SynchronizeDesktopModel;
 import com.openkm.okmsynchronize.model.SynchronizeLock;
 import com.openkm.okmsynchronize.model.SynchronizedFolder;
 import com.openkm.okmsynchronize.model.SynchronizedObject;
@@ -895,31 +896,36 @@ public class SynchronizeService {
             return o1.compareTo(o2);
         }        
     }
+    
 
-	public void uploadDocuments(String folder) {
-		log.debug(KEY_BUNDLE + "Uploading Documents on working path");
-        File fileList=new File(folder);
-        for (final File fileEntry : fileList.listFiles()) {
-            if (!fileEntry.isDirectory()) {
-            	try {
-            	InputStream is = new FileInputStream(fileEntry.getAbsolutePath());
-            	
-					Document doc = ws.createDocumentSimple(fileEntry.getName(),is);
-					if(doc!=null) {
-						fileEntry.renameTo(new File(folder+"\\OpenKMSynchronized\\documents\\"+fileEntry.getName()));
-						fileEntry.delete();
-					}
-				} catch (SynchronizeException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-            }
+    public void uploadDocuments(String folder, String remotePath) {
+        log.debug(KEY_BUNDLE + "Uploading Documents on working path");
+
+            String serverRemotePath = remotePath;
+          if (!serverRemotePath.endsWith("/")) {
+            serverRemotePath += "/"; // Asegurar que la ruta termine con una barra
         }
 
-		
-	}    
-    
+        File fileList = new File(folder);
+        for (final File fileEntry : fileList.listFiles()) {
+            if (!fileEntry.isDirectory()) {
+                try {
+                    InputStream is = new FileInputStream(fileEntry.getAbsolutePath());
+
+                    // Crear el documento en el servidor utilizando la ruta remota
+                    Document doc = ws.createDocumentSimple(serverRemotePath + fileEntry.getName(), is);
+                    if (doc != null) {
+                        // Mover y eliminar el archivo local después de la carga exitosa
+                        fileEntry.renameTo(new File(folder + "\\OpenKMSynchronized\\documents\\" + fileEntry.getName()));
+                        fileEntry.delete();
+                    }
+                } catch (SynchronizeException e) {
+                    e.printStackTrace();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
 }

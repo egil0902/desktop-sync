@@ -25,10 +25,8 @@ public class ConfigurationView extends javax.swing.JDialog {
     
     private ConfigurationModel model;
     
-    public ConfigurationView(ConfigurationModel m) {
-        
-        this.model = m;
-        
+    public ConfigurationView(ConfigurationModel m) {  
+        this.model = m;     
         initComponents();
         setModal(true);
     }
@@ -58,7 +56,7 @@ public class ConfigurationView extends javax.swing.JDialog {
         getContentPane().add(panel_1, BorderLayout.CENTER);
         panel_1.setLayout(new SpringLayout());
         {
-            String[] labels = {"Work path:", "SDK version:", "Server:", "User:", "Pasword:", "Restricted extensions:", "Invalid characters:", "Refresh (seconds):", "Navigator:", "OS explorer:"};
+            String[] labels = {"Work path:","Remote Path:", "SDK version:", "Server:", "User:", "Pasword:", "Restricted extensions:", "Invalid characters:", "Refresh (seconds):", "Navigator:", "OS explorer:"};
             int numPairs = labels.length;
             for (int i = 0; i < numPairs; i++) {
                 label = new JLabel(labels[i], JLabel.TRAILING);
@@ -70,7 +68,11 @@ public class ConfigurationView extends javax.swing.JDialog {
                     textField.setText(model.getKeyValue(ConfigurationModel.KEY_WORK_DIRECTORY));
 
                     buttonSearchWorkDirectory = new JButton("Find");
-                    buttonSearchWorkDirectory.setVisible(true);                    
+                    buttonSearchWorkDirectory.setVisible(true); 
+                    
+                } else if ("Remote Path:".equals(labels[i])) {
+                    textField.setText(model.getKeyValue(ConfigurationModel.KEY_REMOTE_DIRECTORY));
+                    buttonVoid.setVisible(false);
 
                 } else if ("Server:".equals(labels[i])) {
                     textField.setText(model.getKeyValue(ConfigurationModel.KEY_HOST));
@@ -142,7 +144,7 @@ public class ConfigurationView extends javax.swing.JDialog {
     }
     
     private String formatUrlHost(String url) {
-        if(!url.startsWith("http://") || !url.startsWith("https://")) {
+        if(!url.startsWith("http://") && !url.startsWith("https://")) {
             return "https://"  + url;
         } else {
             return url;
@@ -158,16 +160,17 @@ public class ConfigurationView extends javax.swing.JDialog {
     
     // Getter and Setter
     public void setWorkingDirectoriValue(String path) { ((JTextField) panel_1.getComponent(1)).setText(path); }    
-    public String getWorkingDirectoriValue()        { return ((JTextField) panel_1.getComponent(1)).getText(); }    
-    public String getSDKVersionValue()              { return (String) ((JComboBox) panel_1.getComponent(4)).getSelectedItem(); }    
-    public String getHostValue()                    { return formatUrlHost(((JTextField) panel_1.getComponent(7)).getText()); }
-    public String getUserValue()                    { return ((JTextField) panel_1.getComponent(10)).getText(); }
-    public String getPasswordValue()                { return ((JTextField) panel_1.getComponent(13)).getText(); }
-    public String getRestrictedExtensionsValue()    { return ((JTextField) panel_1.getComponent(16)).getText(); }
-    public String getInvalidCharactersValue()       { return ((JTextField) panel_1.getComponent(19)).getText(); }
-    public String getSynchronizeIntervalValue()     { return ((JTextField) panel_1.getComponent(22)).getText(); }    
-    public String getNavigatorValue()               { return ((JTextField) panel_1.getComponent(25)).getText(); }
-    public String getExplorerValue()                { return ((JTextField) panel_1.getComponent(28)).getText(); }     
+    public String getWorkingDirectoriValue()        { return ((JTextField) panel_1.getComponent(1)).getText(); }
+    public String getRemotePathValue()              { return ((JTextField) panel_1.getComponent(4)).getText(); }
+    public String getSDKVersionValue()              { return (String) ((JComboBox) panel_1.getComponent(7)).getSelectedItem(); }    
+    public String getHostValue()                    { return formatUrlHost(((JTextField) panel_1.getComponent(10)).getText()); }
+    public String getUserValue()                    { return ((JTextField) panel_1.getComponent(13)).getText(); }
+    public String getPasswordValue()                { return ((JTextField) panel_1.getComponent(16)).getText(); }
+    public String getRestrictedExtensionsValue()    { return ((JTextField) panel_1.getComponent(19)).getText(); }
+    public String getInvalidCharactersValue()       { return ((JTextField) panel_1.getComponent(22)).getText(); }
+    public String getSynchronizeIntervalValue()     { return ((JTextField) panel_1.getComponent(25)).getText(); }    
+    public String getNavigatorValue()               { return ((JTextField) panel_1.getComponent(28)).getText(); }
+    public String getExplorerValue()                { return ((JTextField) panel_1.getComponent(31)).getText(); }     
     
     // Variables declaration - do not modify
     JPanel panel;
