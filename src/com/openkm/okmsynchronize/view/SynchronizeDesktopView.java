@@ -31,6 +31,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
 /**
@@ -666,7 +667,11 @@ public class SynchronizeDesktopView extends javax.swing.JFrame {
         TreePath tp = new TreePath(selectedNode.getPath());
         if (selectedNode != null) {
             // Remove not existing nodes
-            List<DefaultMutableTreeNode> nowNodes = Collections.list(selectedNode.children());
+        	List<TreeNode> auxNodes = Collections.list(selectedNode.children());
+        	List<DefaultMutableTreeNode> nowNodes = new ArrayList(); 
+        	for(TreeNode auxnode : auxNodes ) {
+        		nowNodes.add((DefaultMutableTreeNode)auxnode);
+        	}
             List<RepositoryNodeTreeModel> nowModelNodes = new ArrayList<RepositoryNodeTreeModel>();
             for(DefaultMutableTreeNode treeNode : nowNodes) {
                 RepositoryNodeTreeModel node = (RepositoryNodeTreeModel)treeNode.getUserObject();                
@@ -692,7 +697,11 @@ public class SynchronizeDesktopView extends javax.swing.JFrame {
         TreePath tp = new TreePath(selectedNode.getPath());
         if(selectedNode != null) {           
             // Remove not existing nodes
-            List<DefaultMutableTreeNode> nowNodes = Collections.list(selectedNode.children());
+        	List<TreeNode> auxNodes = Collections.list(selectedNode.children());
+        	List<DefaultMutableTreeNode> nowNodes = new ArrayList(); 
+        	for(TreeNode auxnode : auxNodes ) {
+        		nowNodes.add((DefaultMutableTreeNode)auxnode);
+        	}
             List<ServerNodeTreeModel> nowModelNodes = new ArrayList<ServerNodeTreeModel>();
             for(DefaultMutableTreeNode treeNode : nowNodes) {
                 ServerNodeTreeModel node = (ServerNodeTreeModel)treeNode.getUserObject();                
