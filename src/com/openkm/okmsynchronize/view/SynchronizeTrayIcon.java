@@ -65,7 +65,7 @@ public class SynchronizeTrayIcon extends TrayIcon {
         trayMenu.setPopupSize(200, 100);
 
         SystemTray systemTray = SystemTray.getSystemTray();
-        setImageAutoSize(false);
+        setImageAutoSize(true);
         try {
             systemTray.add(this);
         } catch (AWTException awte) {
