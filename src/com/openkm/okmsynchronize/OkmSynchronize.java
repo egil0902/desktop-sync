@@ -1,5 +1,7 @@
 package com.openkm.okmsynchronize;
 
+import javax.swing.UIManager;
+
 import com.openkm.okmsynchronize.controller.SynchronizeTrayIconController;
 import com.openkm.okmsynchronize.model.SynchronizeDesktopModel;
 import com.openkm.okmsynchronize.view.SynchronizeTrayIcon;
@@ -28,13 +30,7 @@ public class OkmSynchronize {
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
         try {
-            javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {               
-//                if ("Metal".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (ClassNotFoundException ex) {
             
         } catch (InstantiationException ex) {
