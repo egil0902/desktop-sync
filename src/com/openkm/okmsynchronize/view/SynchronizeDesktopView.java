@@ -158,7 +158,7 @@ public class SynchronizeDesktopView extends javax.swing.JFrame {
         panelRight = new javax.swing.JPanel();
         panelLeft = new javax.swing.JPanel();
 
-        setTitle("OpenKM Desktop Synchonize (Community version)");
+        setTitle("Plataforma Integral de Trámites");
 
         toolBar.setRollover(true);
         toolBar.setToolTipText("Application actions");

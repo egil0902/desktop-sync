@@ -16,7 +16,7 @@ public class Constants {
     
     public final static String LOG_FILE_NAME            = "odesktop.log";
     public final static String LOG_FOLDER_NAME          = "log";
-    public final static String WORK_DIRECTORY_NAME      = "OpenKMSynchronized";
+    public final static String WORK_DIRECTORY_NAME      = "PIT_Synchronized";
     
     public final static String REPOSITORY_SYNCHRONIZED_FOLDERS_NAME    =  "folders";
     public final static String REPOSITORY_SYNCHRONIZED_DOCUMENTS_NAME  =  "documents";
