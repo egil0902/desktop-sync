@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -916,7 +917,7 @@ public class SynchronizeService {
                     Document doc = ws.createDocumentSimple(serverRemotePath + fileEntry.getName(), is);
                     if (doc != null) {
                         // Mover y eliminar el archivo local después de la carga exitosa
-                        fileEntry.renameTo(new File(folder + "\\OpenKMSynchronized\\documents\\" + fileEntry.getName()));
+                        fileEntry.renameTo(new File(folder + "\\PIT_Synchronized\\documents\\" + fileEntry.getName()));
                         fileEntry.delete();
                     }
                 } catch (SynchronizeException e) {
