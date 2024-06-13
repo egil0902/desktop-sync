@@ -13,6 +13,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -55,11 +57,16 @@ public class SynchronizeAboutController {
         public void actionPerformed(ActionEvent e) {            
             try {
                 //view.viewChangeLog();
-                File f = new File( "/home/abujosa/Escritorio/RestVsWebServices.pdf");
-                Desktop.getDesktop().open(f);
-            } catch (IOException ex) {
+            	URI uri = new URI("https://github.com/egil0902/desktop-sync");
+                //File f = new File( "/home/abujosa/Escritorio/RestVsWebServices.pdf");
+                //Desktop.getDesktop().open(f);
+            	Desktop.getDesktop().browse(uri);
+            	} catch (IOException ex) {
                 Logger.getLogger(SynchronizeAboutController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            } catch (URISyntaxException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
         }        
     }
     
@@ -75,7 +82,7 @@ public class SynchronizeAboutController {
         public void mousePressed(MouseEvent me) {
             try {
                 String navigator = model.getKeyValue(ConfigurationModel.KEY_NAVIGATOR);
-                String host = "http://opekm.com";
+                String host = "http://www.casadelsoftware.com";
                 Process p = Runtime.getRuntime().exec(navigator + " " + host);
             } catch (IOException ex) {
 
