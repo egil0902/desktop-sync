@@ -43,7 +43,7 @@ public class SynchronizeAboutView extends javax.swing.JDialog {
         setResizable(false);
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("(c) 2006 - 2014 Desktop Sync");
+        jLabel1.setText("(c) 2024 Desktop Sync");
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openkm/okmsynchronize/view/images/O.png"))); // NOI18N
@@ -65,7 +65,7 @@ public class SynchronizeAboutView extends javax.swing.JDialog {
 
         jLabel6.setForeground(java.awt.Color.blue);
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setText("http://www.openkm.com");
+        jLabel6.setText("http://www.casadelsoftware.com");
         jLabel6.setBorder(null);
 
         jlabelVersion.setFont(new java.awt.Font("DejaVu Sans", 1, 10)); // NOI18N

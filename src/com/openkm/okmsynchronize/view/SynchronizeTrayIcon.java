@@ -49,19 +49,24 @@ public class SynchronizeTrayIcon extends TrayIcon {
     }
        
     private void initComponents() {
-        trayMenu = new JPopupMenu("Synchronize menu");
+        trayMenu = new JPopupMenu("Menú de Sincronización");
 
-        menuItemShowDesktop = new JMenuItem("Show desktop");
-        menuItemExit = new JMenuItem("Exit");
-        menuItemAbout = new JMenuItem("About");
+        menuItemShowDesktop = new JMenuItem("Mostrar Escritorio");
+        menuItemExit = new JMenuItem("Salir");
+        menuItemAbout = new JMenuItem("Acerca de");
 
         trayMenu.add(new JPopupMenu.Separator());
         trayMenu.add(menuItemShowDesktop);
         trayMenu.add(new JPopupMenu.Separator());
         trayMenu.add(menuItemAbout);
         trayMenu.add(menuItemExit);
-        
-        trayMenu.setBorder(BorderFactory.createTitledBorder(BorderFactory.createRaisedSoftBevelBorder(), "Odesktop menu", TitledBorder.CENTER, TitledBorder.DEFAULT_POSITION));
+
+        trayMenu.setBorder(BorderFactory.createTitledBorder(
+            BorderFactory.createRaisedSoftBevelBorder(),
+            "Menú del Escritorio",
+            TitledBorder.CENTER,
+            TitledBorder.DEFAULT_POSITION
+        ));
         trayMenu.setPopupSize(200, 100);
 
         SystemTray systemTray = SystemTray.getSystemTray();
@@ -69,9 +74,10 @@ public class SynchronizeTrayIcon extends TrayIcon {
         try {
             systemTray.add(this);
         } catch (AWTException awte) {
-            
+            awte.printStackTrace();
         }
     }
+
     
     public void addtrayMenuItemsListener(ActionListener l) {        
         menuItemShowDesktop.addActionListener(l);
